@@ -17,14 +17,14 @@
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
- * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED 
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
  * TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
  * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 /* Anagram Game Application */
@@ -88,7 +88,9 @@ final class StaticWordLibrary extends WordLibrary {
         "tree"
         };
 
-    private static final String[] SCRAMBLED_WORD_LIST = {
+    private String[] SCRAMBLED_WORD_LIST;
+
+    /*private static final String[] SCRAMBLED_WORD_LIST = {
         "batsartcoin",
         "maibuguos",
         "ratimhteci",
@@ -138,14 +140,15 @@ final class StaticWordLibrary extends WordLibrary {
         "boko",
         "blel",
         "tere"
-        };
-    
+        };*/
+
     final static WordLibrary DEFAULT = new StaticWordLibrary();
 
     /**
      * Singleton class.
      */
     private StaticWordLibrary() {
+    	SCRAMBLED_WORD_LIST=sortWords();
     }
 
     /**
@@ -184,4 +187,31 @@ final class StaticWordLibrary extends WordLibrary {
         return userGuess.equals(getWord(idx));
     }
 
+
+    public String[] sortWords() {
+    	String[] array=new String[WORD_LIST.length];
+    	for(int i=0;i<WORD_LIST.length;i++) {
+    		String original=WORD_LIST[i];
+    		String random="";
+    		for(int j=0;j<WORD_LIST[i].length();j++) {
+    			int r=original.length();
+    			int k=0;
+    			if(r>1) {
+    				k=new java.util.Random().nextInt(r-1);
+    			}
+    			random=random+original.charAt(k);
+    			if(r>1) {
+    				if(k==0) {
+    					original=original.substring(k+1);
+    				}else if(k==r-1){
+    					original=original.substring(0,k);
+    				}else {
+    					original=original.substring(0,k)+original.substring(k+1);
+    				}
+    			}
+    		}
+    		array[i]=random;
+    	}
+    	return array;
+    }
 }
