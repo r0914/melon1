@@ -35,6 +35,8 @@ import com.toy.anagrams.lib.WordLibrary;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -84,7 +86,15 @@ public class Anagrams extends JFrame {
         
         initComponents();
         getRootPane().setDefaultButton(guessButton);
-        scrambledWord.setText(wordLibrary.getScrambledWord(wordIdx));
+      // scrambledWord.setText(wordLibrary.getScrambledWord(wordIdx));
+       if(selectLevel.getSelectedItem().toString()=="Level2") {
+    		scrambledWord.setText(wordLibrary.getScrambledWord_LEVEL2(wordIdx));
+
+    		}else if(selectLevel.getSelectedItem().toString()=="Level3") {
+        		scrambledWord.setText(wordLibrary.getScrambledWord_LEVEL3(wordIdx));
+        		}else {
+        			scrambledWord.setText(wordLibrary.getScrambledWord_LEVEL1(wordIdx));
+        		}
         pack();
         guessedWord.requestFocusInWindow();
         // Center in the screen
@@ -218,6 +228,13 @@ public class Anagrams extends JFrame {
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         mainPanel.add(selectLevel, gridBagConstraints);
+        //ふき
+        selectLevel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	selectLevelActionPerformed(evt);
+            }
+        });
+
 
         getContentPane().add(mainPanel, java.awt.BorderLayout.CENTER);
 
@@ -257,13 +274,35 @@ public class Anagrams extends JFrame {
         wordIdx = (wordIdx + 1) % wordLibrary.getSize();
 
         feedbackLabel.setText(" ");
-        scrambledWord.setText(wordLibrary.getScrambledWord(wordIdx));
+       //scrambledWord.setText(wordLibrary.getScrambledWord(wordIdx));
+        
+        if(selectLevel.getSelectedItem().toString()=="Level2") {
+    		scrambledWord.setText(wordLibrary.getScrambledWord_LEVEL2(wordIdx));
+
+    		}else if(selectLevel.getSelectedItem().toString()=="Level3") {
+        		scrambledWord.setText(wordLibrary.getScrambledWord_LEVEL3(wordIdx));
+        		}else {
+        			scrambledWord.setText(wordLibrary.getScrambledWord_LEVEL1(wordIdx));
+        		}
+        
         guessedWord.setText("");
         getRootPane().setDefaultButton(guessButton);
 
         guessedWord.requestFocusInWindow();
     }//GEN-LAST:event_nextTrialActionPerformed
 
+    private void selectLevelActionPerformed(ActionEvent evt) {
+    	//System.out.println(wordLibrary.getScrambledWord(wordIdx));//単語でてくる
+    	//ここで判定ふき
+    	 if(selectLevel.getSelectedItem().toString()=="Level2") {
+     		scrambledWord.setText(wordLibrary.getScrambledWord_LEVEL2(wordIdx));
+
+     		}else if(selectLevel.getSelectedItem().toString()=="Level3") {
+         		scrambledWord.setText(wordLibrary.getScrambledWord_LEVEL3(wordIdx));
+         		}else {
+         			scrambledWord.setText(wordLibrary.getScrambledWord_LEVEL1(wordIdx));
+         		}
+    	}
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
