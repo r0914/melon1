@@ -88,7 +88,10 @@ final class StaticWordLibrary extends WordLibrary {
         "tree"
         };
 
-    private String[] SCRAMBLED_WORD_LIST;
+    //private String[] SCRAMBLED_WORD_LIST;
+    private String[] SCRAMBLED_WORD_LIST_LEVEL1;
+    private String[] SCRAMBLED_WORD_LIST_LEVEL2;
+    private String[] SCRAMBLED_WORD_LIST_LEVEL3;
 
     /*private static final String[] SCRAMBLED_WORD_LIST = {
         "batsartcoin",
@@ -148,7 +151,10 @@ final class StaticWordLibrary extends WordLibrary {
      * Singleton class.
      */
     private StaticWordLibrary() {
-    	SCRAMBLED_WORD_LIST=sortWords();
+    	//SCRAMBLED_WORD_LIST=sortWords(0);//引数で変更の文字数の指定
+    	SCRAMBLED_WORD_LIST_LEVEL1=sortWords(1);
+    	SCRAMBLED_WORD_LIST_LEVEL2=sortWords(2);
+    	SCRAMBLED_WORD_LIST_LEVEL3=sortWords(3);
     }
 
     /**
@@ -165,7 +171,21 @@ final class StaticWordLibrary extends WordLibrary {
      * @param idx index of required word
      * @return word at that index in its scrambled form
      */
-    public String getScrambledWord(int idx) {
+    public String getScrambledWord_LEVEL1(int idx) {
+    	//ここでレベルごとにreturn
+        return SCRAMBLED_WORD_LIST_LEVEL1[idx];
+    }
+    public String getScrambledWord_LEVEL2(int idx) {
+    	//ここでレベルごとにreturn
+        return SCRAMBLED_WORD_LIST_LEVEL2[idx];
+    }
+    public String getScrambledWord_LEVEL3(int idx) {
+    	//ここでレベルごとにreturn
+        return SCRAMBLED_WORD_LIST_LEVEL3[idx];
+    }
+   /* 
+    * public String getScrambledWord(int idx) {
+    	//ここでレベルごとにreturn
         return SCRAMBLED_WORD_LIST[idx];
     }
 
@@ -188,12 +208,22 @@ final class StaticWordLibrary extends WordLibrary {
     }
 
 
-    public String[] sortWords() {
+    public String[] sortWords(int level) {
     	int n=WORD_LIST.length;
     	String[] array=new String[n];
     	for(int i=0;i<n;i++) {
     		char[] s=WORD_LIST[i].toCharArray();
-    		for(int j=s.length-1;j>0;j--) {
+    		
+    		int count=0;
+    		if(level==1) 
+    			count=s.length-1;
+    	else if(level==2) 
+    			count=s.length/2;
+    		
+    	else if(level==3)
+    			count=s.length/3;
+    			
+    			for(int j=count;j>0;j--) {
     			int index=new java.util.Random().nextInt(j);
     			char temp=s[index];
     			s[index]=s[j];
