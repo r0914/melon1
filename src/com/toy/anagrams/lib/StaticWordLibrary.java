@@ -189,28 +189,17 @@ final class StaticWordLibrary extends WordLibrary {
 
 
     public String[] sortWords() {
-    	String[] array=new String[WORD_LIST.length];
-    	for(int i=0;i<WORD_LIST.length;i++) {
-    		String original=WORD_LIST[i];
-    		String random="";
-    		for(int j=0;j<WORD_LIST[i].length();j++) {
-    			int r=original.length();
-    			int k=0;
-    			if(r>1) {
-    				k=new java.util.Random().nextInt(r-1);
-    			}
-    			random=random+original.charAt(k);
-    			if(r>1) {
-    				if(k==0) {
-    					original=original.substring(k+1);
-    				}else if(k==r-1){
-    					original=original.substring(0,k);
-    				}else {
-    					original=original.substring(0,k)+original.substring(k+1);
-    				}
-    			}
+    	int n=WORD_LIST.length;
+    	String[] array=new String[n];
+    	for(int i=0;i<n;i++) {
+    		char[] s=WORD_LIST[i].toCharArray();
+    		for(int j=s.length-1;j>0;j--) {
+    			int index=new java.util.Random().nextInt(j);
+    			char temp=s[index];
+    			s[index]=s[j];
+    			s[j]=temp;
     		}
-    		array[i]=random;
+    		array[i]=new String(s);
     	}
     	return array;
     }
